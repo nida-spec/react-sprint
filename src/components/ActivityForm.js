@@ -4,6 +4,8 @@ import '../assets/activityForm.css'
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
+import { createPost, updatePost } from '../actions/actions.js'
+import { CREATE } from '../constants/actionTypes';
 
 const ActivityForm = () => {
     const [name, setName]= useState("")
@@ -34,7 +36,8 @@ const ActivityForm = () => {
             selectedDate,
             activityType
         }
-        dispatch({type: "ADD_ACTIVITY", payload: data})
+        // dispatch({type: "ADD_ACTIVITY", payload: data})
+        dispatch(createPost(data))
          toast.success("Activity added successfully")
          history.push("/")
     }
@@ -79,12 +82,12 @@ const ActivityForm = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="duration">Duration</label>
-                                <input type="time" step="0.001" id="duration" name="duration" min="1" max="12" 
+                                <input type="number"  id="duration" name="duration" min="1" max="12" 
                                 value={duration} onChange={(e)=> setDuration(e.target.value)} required/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="datee">Date</label>
-                                <input type="date" id="datee" value={selectedDate} onChange={(e)=> setSelectedDate(e.target.value)} required/>
+                                <input type="number" id="datee" value={selectedDate} onChange={(e)=> setSelectedDate(e.target.value)} required/>
                             </div>
                             <div className="row btn-create justify-content-center">
                             <button type="submit" className="btn btn-danger submit-button">Create</button>
