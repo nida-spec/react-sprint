@@ -20,8 +20,10 @@ const initialState= [
     }
 ]
 
- const activityReducer=(state= initialState, action) =>{
+ const activityReducer=(state= {activities: []}, action) =>{
      switch(action.type){
+        case FETCH_ALL:
+            return { activities: action.payload}
          case CREATE:
              return [...action.payload];
 
@@ -43,19 +45,6 @@ const initialState= [
 
 
 
-// export default (posts = [], action) => {
-//   switch (action.type) {
-//     case FETCH_ALL:
-//       return action.payload;
-//     case CREATE:
-//       return [...posts, action.payload];
-//     case UPDATE:
-//       return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
-//     case DELETE:
-//       return posts.filter((post) => post._id !== action.payload);
-//     default:
-//       return posts;
-//   }
-// };
+
 
 export default activityReducer
