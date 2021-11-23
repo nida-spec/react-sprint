@@ -6,13 +6,14 @@ import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 import { createPost, updatePost } from '../actions/actions.js'
 import { CREATE } from '../constants/actionTypes';
+import { connect } from 'react-redux';
 
 const ActivityForm = () => {
     const [name, setName]= useState("")
     const [description, setDescription]= useState("") 
-    const [activityType, setActivityType]= useState(["Run","Bicycle","Swim","Ride", "Walk", "Hike"]) 
-    const Add = activityType.map(Add => Add
-        )
+    const [activityType, setActivityType]= useState("") 
+    // const Add = activityType.map(Add => Add
+    //     )
     const [duration, setDuration]= useState("") 
     const [selectedDate, setSelectedDate]= useState("") 
 
@@ -29,7 +30,8 @@ const ActivityForm = () => {
 
         }
         const data= {
-            id: activities[activities.length - 1].id+1,
+            // id: activities[activities.length - 1].id+1,
+            id: Math.random(),
             name,
             description,
             duration,
@@ -37,12 +39,14 @@ const ActivityForm = () => {
             activityType
         }
         // dispatch({type: "ADD_ACTIVITY", payload: data})
-        dispatch(createPost(data))
+         dispatch(createPost(data))
+         // createPost(data)
          toast.success("Activity added successfully")
          history.push("/")
     }
     const handleActivityTypeChange = (e) => console.log(activityType[e.target.value])
- 
+
+   
     
     return (
         <>
@@ -69,15 +73,16 @@ const ActivityForm = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="activity">Select Activity</label>
-                                <select className="form-control" id="activity" onChange={e => handleActivityTypeChange(e)}>
-                                    {/* <option>Run</option>
+                                <select className="form-control" id="activity"  value={activityType} 
+                                onChange={(e) => setActivityType( e.target.value )}>
+                                     <option>Run</option>
                                     <option>Bicycle</option>
                                     <option>Ride</option>
                                     <option>Swim</option>
                                     <option>Walk</option>
-                                    <option>Hike</option> */}
-                                    {Add.map((exercise, key) => <option key={key} value={key}>{exercise}</option>)}
-                                  </select>
+                                    <option>Hike</option> 
+                                    {/* {Add.map((exercise, key) => <option key={key} value={key}>{exercise}</option>)} */}
+                                  </select> 
 
                             </div>
                             <div className="form-group">
@@ -87,7 +92,7 @@ const ActivityForm = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="datee">Date</label>
-                                <input type="number" id="datee" value={selectedDate} onChange={(e)=> setSelectedDate(e.target.value)} required/>
+                                <input type="date" id="datee" value={selectedDate} onChange={(e)=> setSelectedDate(e.target.value)} required/>
                             </div>
                             <div className="row btn-create justify-content-center">
                             <button type="submit" className="btn btn-danger submit-button">Create</button>
@@ -105,4 +110,18 @@ const ActivityForm = () => {
     )
 }
 
+// const mapStatetoProps=(state)=>{
+//     return{
+//         data: state.data
+//     }
+// }
+// const mapDispatchtoProps=(dispatch)=>{
+//     return{
+//         createPost:function(data){
+//             dispatch(createPost(data))
+//         }
+//     }
+// }
+
+// export default connect(mapStatetoProps, mapDispatchtoProps) (ActivityForm)
 export default ActivityForm
